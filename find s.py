@@ -1,0 +1,33 @@
+import pandas as pd
+
+data = [
+    ['Sunny', 'Warm', 'Normal', 'Strong', 'Warm', 'Same', 'Yes'],
+    ['Sunny', 'Warm', 'High',   'Strong', 'Warm', 'Same', 'Yes'],
+    ['Rainy', 'Cold', 'High',   'Strong', 'Warm', 'Change', 'No'],
+    ['Sunny', 'Warm', 'High',   'Strong', 'Cool', 'Change', 'Yes']
+]
+
+columns = ['Sky', 'AirTemp', 'Humidity', 'Wind', 'Water', 'Forecast', 'EnjoySport']
+
+df = pd.DataFrame(data, columns=columns)
+print("Training Data:")
+print(df)
+
+# Find first positive example
+for i in range(len(df)):
+    if df.iloc[i, -1] == 'Yes':
+        hypothesis = list(df.iloc[i, :-1])
+        break
+
+print("\nInitial Hypothesis:")
+print(hypothesis)
+
+# Apply FIND-S
+for i in range(len(df)):
+    if df.iloc[i, -1] == 'Yes':
+        for j in range(len(hypothesis)):
+            if hypothesis[j] != df.iloc[i, j]:
+                hypothesis[j] = '?'
+
+print("\nFinal Most Specific Hypothesis:")
+print(hypothesis)
